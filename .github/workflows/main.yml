@@ -14,22 +14,6 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install Zowe CLI (core only)
-        run: |
-          npm install -g @zowe/cli@latest
-          zowe --version
-          # sanity check that subcommands există
-          zowe zos-files --help > /dev/null
-          zowe zos-jobs --help > /dev/null
-      - name: Configure Zowe profile
-        run: |
-           zowe config init --zosmf-profile cicd \
-             --host ${{ secrets.ZOSMF_HOST }} \
-             --port ${{ secrets.ZOSMF_PORT }} \
-             --user ${{ secrets.ZOWE_USERNAME }} \
-             --password ${{ secrets.ZOWE_PASSWORD }} \
-             --reject-unauthorized false
-           zowe config set profiles.zosmf.properties.baseProfile cicd
       - uses: actions/checkout@v2
      
       - name: Set up Java
@@ -43,11 +27,10 @@ jobs:
          ZOWE_PASSWORD: ${{ secrets.ZOWE_PASSWORD }}
         run: |
           chmod +x .github/scripts/zowe_operations.sh
-          .github/scripts/zowe_operations.sh
+
       - name: Run COBOL Check on Mainframe
         env:
          ZOWE_USERNAME: ${{ secrets.ZOWE_USERNAME }}
          ZOWE_PASSWORD: ${{ secrets.ZOWE_PASSWORD }}
         run: |
            chmod +x .github/scripts/mainframe_operations.sh
-           .github/scripts/mainframe_operations.sh   

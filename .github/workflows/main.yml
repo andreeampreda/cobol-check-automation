@@ -14,11 +14,13 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install Zowe CLI
+      - name: Install Zowe CLI (core only)
         run: |
-          npm install -g @zowe/cli @zowe/zos-files-for-zowe-cli @zowe/zos-jobs-for-zowe-cli
+          npm install -g @zowe/cli@latest
           zowe --version
-          which zowe
+          # sanity check that subcommands există
+          zowe zos-files --help > /dev/null
+          zowe zos-jobs --help > /dev/null
 
       - uses: actions/checkout@v2
      

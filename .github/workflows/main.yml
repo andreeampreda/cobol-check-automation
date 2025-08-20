@@ -26,8 +26,8 @@ jobs:
           zowe profiles create zosmf cicd \
             --host ${{ secrets.ZOSMF_HOST }} \
             --port ${{ secrets.ZOSMF_PORT }} \
-            --user ${{ secrets.ZOSMF_USER }} \
-            --password ${{ secrets.ZOSMF_PASS }} \
+            --user ${{ secrets.ZOWE_USERNAME }} \
+            --password ${{ secrets.ZOWE_PASSWORD }} \
             --reject-unauthorized false
           zowe profiles set default zosmf cicd
       - uses: actions/checkout@v2

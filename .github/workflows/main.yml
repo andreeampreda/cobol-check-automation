@@ -23,13 +23,13 @@ jobs:
           zowe zos-jobs --help > /dev/null
       - name: Configure Zowe profile
         run: |
-          zowe profiles create zosmf cicd \
-            --host ${{ secrets.ZOSMF_HOST }} \
-            --port ${{ secrets.ZOSMF_PORT }} \
-            --user ${{ secrets.ZOWE_USERNAME }} \
-            --password ${{ secrets.ZOWE_PASSWORD }} \
-            --reject-unauthorized false
-          zowe profiles set default zosmf cicd
+           zowe config init --zosmf-profile cicd \
+             --host ${{ secrets.ZOSMF_HOST }} \
+             --port ${{ secrets.ZOSMF_PORT }} \
+             --user ${{ secrets.ZOWE_USERNAME }} \
+             --password ${{ secrets.ZOWE_PASSWORD }} \
+             --reject-unauthorized false
+           zowe config set profiles.zosmf.properties.baseProfile cicd
       - uses: actions/checkout@v2
      
       - name: Set up Java

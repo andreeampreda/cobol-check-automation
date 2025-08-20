@@ -21,7 +21,15 @@ jobs:
           # sanity check that subcommands există
           zowe zos-files --help > /dev/null
           zowe zos-jobs --help > /dev/null
-
+      - name: Configure Zowe profile
+        run: |
+          zowe profiles create zosmf cicd \
+            --host ${{ secrets.ZOSMF_HOST }} \
+            --port ${{ secrets.ZOSMF_PORT }} \
+            --user ${{ secrets.ZOSMF_USER }} \
+            --password ${{ secrets.ZOSMF_PASS }} \
+            --reject-unauthorized false
+          zowe profiles set default zosmf cicd
       - uses: actions/checkout@v2
      
       - name: Set up Java
